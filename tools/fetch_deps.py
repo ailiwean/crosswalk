@@ -69,7 +69,8 @@ def main():
     sys.stdout = gclient_utils.MakeFileAutoFlush(sys.stdout)
     # Make stdout annotated with the thread ids.
     sys.stdout = gclient_utils.MakeFileAnnotated(sys.stdout)
-  except (gclient_utils.Error, subprocess2.CalledProcessError) as e:
+  except (gclient_utils.Error, subprocess2.CalledProcessError), e:
+    print >> sys.stderr, 'Error: %s' % str(e)
     return 1
 
   deps_fetcher = DepsFetcher(options)
