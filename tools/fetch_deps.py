@@ -63,15 +63,16 @@ def main():
   options, args = option_parser.parse_args()
 
   # Following code copied from gclient_utils.py
-  try:
+try:
     # Make stdout auto-flush so buildbot doesn't kill us during lengthy
     # operations. Python as a strong tendency to buffer sys.stdout.
     sys.stdout = gclient_utils.MakeFileAutoFlush(sys.stdout)
     # Make stdout annotated with the thread ids.
     sys.stdout = gclient_utils.MakeFileAnnotated(sys.stdout)
-  except (gclient_utils.Error, subprocess2.CalledProcessError), e:
-    print >> sys.stderr, 'Error: %s' % str(e)
+except (gclient_utils.Error, subprocess2.CalledProcessError) as e:
+    print('Error: %s' % str(e), file=sys.stderr)
     return 1
+
 
   deps_fetcher = DepsFetcher(options)
   deps_fetcher.DoGclientSyncForChromium()
